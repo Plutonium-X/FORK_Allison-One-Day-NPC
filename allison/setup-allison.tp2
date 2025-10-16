@@ -1,13 +1,24 @@
 // Allison NPC Mod for BG2
 //
-// Version 1.7
-// Release Date: 03/02/2009
+// Version 1.9
+// Release Date: 11/14/2024
 // Programmer: Rastor
 
 BACKUP ~allison/backup~
 AUTHOR ~"Rastor" <rastor@rpgdungeon.net>~
 AUTO_TRA ~allison/%s~
 README ~allison/readme-allison.html~
+
+ALWAYS
+ ACTION_DEFINE_ARRAY tra_reload BEGIN setup END
+ LAF HANDLE_CHARSETS
+ INT_VAR
+ infer_charset = 1
+ STR_VAR
+ tra_path = EVAL ~%MOD_FOLDER%/tra~
+ reload_array = tra_reload
+ END
+ END
 
 ALLOW_MISSING
  ~AR6200.BCS~
@@ -97,7 +108,12 @@ COPY ~allison/r#allis.cre~ ~override~
 
 COPY ~allison/voicing~ ~override~
 
+ACTION_IF GAME_IS ~TOB BGT~ THEN BEGIN
 COPY ~allison/graphics~ ~override~
+END
+ACTION_IF GAME_IS ~BG2EE EET~ THEN BEGIN
+COPY ~allison/graphicsEE~ ~override~
+END
 
 COMPILE ~allison/dialogues~
 
